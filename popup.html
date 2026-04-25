@@ -1,0 +1,196 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart News Assistant</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="logo">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M19 3H5C3.89543 3 3 3.89543 3 5V19C3 20.1046 3.89543 21 5 21H19C20.1046 21 21 20.1046 21 19V5C21 3.89543 20.1046 3 19 3Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    <path d="M7 7H17M7 12H17M7 17H13" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                </svg>
+                <h1>News Assistant</h1>
+            </div>
+            <div class="status-indicator" id="statusIndicator">
+                <span class="status-dot"></span>
+                <span class="status-text">Ready</span>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="content" id="contentArea">
+            <!-- Initial State -->
+            <div id="initialState" class="state-view">
+                <div class="icon-large">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M12 2L2 7L12 12L22 7L12 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                </div>
+                <h2>Analyze This Page</h2>
+                <p>Click the button below to check if this page contains news content</p>
+                <button class="btn btn-primary" id="analyzeBtn">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="11" cy="11" r="8" stroke="currentColor" stroke-width="2"/>
+                        <path d="M21 21L16.65 16.65" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    Analyze Page
+                </button>
+            </div>
+
+            <!-- Loading State -->
+            <div id="loadingState" class="state-view hidden">
+                <div class="loader"></div>
+                <h2>Analyzing Content...</h2>
+                <p id="loadingText">Please wait while we check the page</p>
+            </div>
+
+            <!-- Not News State -->
+            <div id="notNewsState" class="state-view hidden">
+                <div class="icon-large error">
+                    <svg width="64" height="64" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                        <path d="M15 9L9 15M9 9L15 15" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                </div>
+                <h2>Not a News Article</h2>
+                <p>This page doesn't appear to contain news content. Please navigate to a news article and try again.</p>
+                <button class="btn btn-secondary" id="retryBtn">Try Again</button>
+            </div>
+
+            <!-- Features View (shown when news is detected) -->
+            <div id="featuresView" class="state-view hidden">
+                <div class="news-detected">
+                    <div class="news-icon">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M9 11L12 14L22 4" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            <path d="M21 12V19C21 20.1046 20.1046 21 19 21H5C3.89543 21 3 20.1046 3 19V5C3 3.89543 3.89543 3 5 3H16" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span>News Article Detected</span>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card" id="summaryCard">
+                        <div class="feature-icon summary">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M14 2H6C4.89543 2 4 2.89543 4 4V20C4 21.1046 4.89543 22 6 22H18C19.1046 22 20 21.1046 20 20V8L14 2Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M14 2V8H20M16 13H8M16 17H8M10 9H8" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Get Summary</h3>
+                        <p>Get an unbiased summary from multiple sources</p>
+                        <button class="btn btn-feature">Generate Summary</button>
+                    </div>
+
+                    <div class="feature-card" id="biasCard">
+                        <div class="feature-icon bias">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 2C6.48 2 2 6.48 2 12C2 17.52 6.48 22 12 22C17.52 22 22 17.52 22 12C22 6.48 17.52 2 12 2Z" stroke="currentColor" stroke-width="2"/>
+                                <path d="M12 6V12L16 14" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                            </svg>
+                        </div>
+                        <h3>Check Bias</h3>
+                        <p>Analyze the article for potential bias</p>
+                        <button class="btn btn-feature">Analyze Bias</button>
+                    </div>
+
+                    <div class="feature-card" id="questionCard">
+                        <div class="feature-icon question">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M21 15C21 15.5304 20.7893 16.0391 20.4142 16.4142C20.0391 16.7893 19.5304 17 19 17H7L3 21V5C3 4.46957 3.21071 3.96086 3.58579 3.58579C3.96086 3.21071 4.46957 3 5 3H19C19.5304 3 20.0391 3.21071 20.4142 3.58579C20.7893 3.96086 21 4.46957 21 5V15Z" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                                <path d="M10 9C10 8.46957 10.2107 7.96086 10.5858 7.58579C10.9609 7.21071 11.4696 7 12 7C12.5304 7 13.0391 7.21071 13.4142 7.58579C13.7893 7.96086 14 8.46957 14 9C14 10 12 10.5 12 12M12 15H12.01" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                            </svg>
+                        </div>
+                        <h3>Ask Question</h3>
+                        <p>Ask follow-up questions about this news</p>
+                        <button class="btn btn-feature">Ask Away</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Summary Selection -->
+            <div id="summarySelection" class="state-view hidden">
+                <button class="back-btn" id="backFromSummary">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back
+                </button>
+                <h2>Choose Summary Type</h2>
+                <p>How detailed would you like your summary to be?</p>
+                <div class="summary-options">
+                    <button class="summary-option" id="quickSummaryBtn">
+                        <div class="option-icon">⚡</div>
+                        <h3>Quick Summary</h3>
+                        <p>Brief overview of the main points</p>
+                    </button>
+                    <button class="summary-option" id="detailedSummaryBtn">
+                        <div class="option-icon">📋</div>
+                        <h3>Detailed Summary</h3>
+                        <p>In-depth analysis with sources</p>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Results View -->
+            <div id="resultsView" class="state-view hidden">
+                <button class="back-btn" id="backFromResults">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back
+                </button>
+                <div id="resultsContent">
+                    <!-- Dynamic content will be inserted here -->
+                </div>
+                <div class="iconn-container" id="saveBtn">
+                        <!-- Save Icon -->
+                        <button class="iconn-btn save-btn" title="Save Document">
+                            <i class="fas fa-save"></i>
+                            <span>Save</span>
+                        </button>
+
+                        <!-- PDF Download Icon -->
+                        <button class="iconn-btn pdf-btn" title="Download as PDF">
+                            <i class="fas fa-file-pdf"></i>
+                            <span>Download PDF</span>
+                        </button>
+                </div>
+            </div>
+
+            <!-- Q&A View -->
+            <div id="qaView" class="state-view hidden">
+                <button class="back-btn" id="backFromQA">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M19 12H5M5 12L12 19M5 12L12 5" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                    </svg>
+                    Back
+                </button>
+                <h2>Ask a Question</h2>
+                <div class="chat-container" id="chatContainer">
+                    <!-- Chat messages will appear here -->
+                </div>
+                <div class="input-container">
+                    <input type="text" id="questionInput" placeholder="Type your question here..." />
+                    <button class="btn btn-icon" id="sendQuestionBtn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M22 2L11 13M22 2L15 22L11 13M22 2L2 9L11 13" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="html2pdf.bundle.min.js"></script>
+    <script src="popup.js"></script>
+</body>
+</html>
