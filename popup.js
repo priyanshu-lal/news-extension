@@ -201,7 +201,7 @@ async function handleBiasClick() {
 
 function handleQuestionClick() {
     AppState.chatHistory = [];
-    elements.chatContainer.innerHTML = '<p style="color: #718096; text-align: center; padding: 20px;">Ask me anything about this news article!</p>';
+    elements.chatContainer.innerHTML = '<p style="color: #A89E97; text-align: center; padding: 20px;">Ask me anything about this news article!</p>';
     showView(Views.QA);
 }
 
@@ -219,13 +219,13 @@ async function handleSummaryTypeSelection(type) {
             type
         );
 
-        html2pdf().from(
-            `<h3 style="text-align: center; font-size: 25px; border-bottom: 2px solid #222; padding-bottom: 10px; margin: 40px;">
-            ${AppState.pageTitle}</h3>
-            <div style="font-family: 'Times New Roman', serif; font-size: 18px; margin: 40px; color: #222; background-color: #fff;">
-                ${AppState.summary}
-            </div>`)
-            .save("document.pdf");
+        // html2pdf().from(
+        //     `<h3 style="text-align: center; font-size: 25px; border-bottom: 2px solid #222; padding-bottom: 10px; margin: 40px;">
+        //     ${AppState.pageTitle}</h3>
+        //     <div style="font-family: 'Times New Roman', serif; font-size: 18px; margin: 40px; color: #222; background-color: #fff;">
+        //         ${AppState.summary}
+        //     </div>`)
+        //     .save("document.pdf");
 
         displayResults(type === 'quick' ? 'Quick Summary' : 'Detailed Summary', AppState.summary);
         updateStatus('Ready');

@@ -1,12 +1,12 @@
 // Background service worker - handles API calls and communication
 
 const CONFIG = {
-    LLM_API_KEY: 'undefined',
-    LLM_API_ENDPOINT: 'undefined',
-    MODEL_NAME: 'undefined',
-    SEARCH_API_KEY: 'undefined',
-    SEARCH_API_ENDPOINT: 'undefined',
-    SEARCH_API_CX_ID: 'undefined'
+    LLM_API_KEY: 'AIzaSyDKzkwGAvW3z2PV9aV-j9tOHl5FcW6Pry8',
+    LLM_API_ENDPOINT: 'https://generativelanguage.googleapis.com/v1beta/models/',
+    MODEL_NAME: 'gemini-2.5-flash',
+    SEARCH_API_KEY: 'AIzaSyBNiRDko0pbsYn_UxZzTsUrsoHZXU6UHdk',
+    SEARCH_API_ENDPOINT: 'https://www.googleapis.com/customsearch/v1',
+    SEARCH_API_CX_ID: '66cfc69653a864e69'
 };
 
 // Listen for messages from popup
@@ -245,21 +245,10 @@ async function searchRelatedArticles(title) {
                 });
             }
         }
-        
-        // Fallback: create mock results if no results found
-        // if (results.length === 0) {
-        //     results.push({
-        //         title: 'Related coverage from original source',
-        //         url: '#',
-        //         source: 'Original Article',
-        //         snippet: 'Multiple sources are covering this story'
-        //     });
-        // }
         return results;
     }
     catch (error) {
         console.error('Error searching articles:', error);
-        // Return empty array on error
         return [];
     }
 }
